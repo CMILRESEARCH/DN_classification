@@ -62,7 +62,10 @@ def train_network(train_index,test_index,txt_loc,lbl_loc,learning_rate,training_
 
     # Define a function that returns mean squared error on a batch
     def MSE(x,y):
-        return np.sum((x-y)**2)/batch_size
+        squared_diff = tf.square(tf.subtract(x, y))
+        loss = tf.reduce_sum(squared_diff) / batch_size
+        print(loss)
+        return loss
 
     # Dense layer to select input feature importance
     D_in=tf.layers.dense(X,num_input,activation=tf.nn.leaky_relu)

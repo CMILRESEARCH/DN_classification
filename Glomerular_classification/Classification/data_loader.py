@@ -20,6 +20,13 @@ def import_data(txt_file):
         f_=[]
         for f_val in featurevals[:-1]:
             f_.append(float(f_val))
+        arr = np.array(f_)
+
+        # Replace +Inf with max finite value, -Inf with min finite value
+        arr[np.isposinf(arr)] = np.nanmax(arr[np.isfinite(arr)])
+        arr[np.isneginf(arr)] = np.nanmin(arr[np.isfinite(arr)])
+
+        f_ = arr.tolist()
         features.append(f_)
     return feats
 

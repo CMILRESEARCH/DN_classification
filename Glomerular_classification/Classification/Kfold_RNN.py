@@ -10,13 +10,13 @@ def make_folder(directory):
     if not os.path.exists(directory):
         os.makedirs(directory) # make directory if it does not exit already # make new directory
 # choose GPU or CPU device
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+#os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 # Define location of features and labels
-txt_loc='/hdd/BG_projects/JASN/RNN/Final_codes/KTRC-VUMC_Full_2.txt'
-lbl_loc='/hdd/BG_projects/JASN/RNN/Final_codes/KTRC-VUMC_Full_labels.txt'
+txt_loc='/blue/pinaki.sarder/varanasin/dn/Abnormal_tubule_features.txt'
+lbl_loc='/blue/pinaki.sarder/varanasin/dn/tubule_lbl.txt'
 
 # Define where to store saved models
-model_path='/hdd/BG_projects/JASN/RNN/Final_codes/KTRC-VUMC_full'
+model_path='/blue/pinaki.sarder/varanasin/dn/dn_classification'
 make_folder(model_path)
 # Define name of text file to write predictions to
 out_text=model_path+'/VUMC_full_predictions.txt'
@@ -25,8 +25,9 @@ f.close()
 
 # Import the features
 all_features = np.array(import_data(txt_loc))
-print(len(all_features))
-print(len(all_features[0][0]))
+print("1 : ",len(all_features))
+print("2 : ",len(all_features[0]))
+
 # Import the labels
 labels=np.array(import_labels(lbl_loc))
 
@@ -51,7 +52,7 @@ save_interval=training_steps
 #Determine number of classes from labels
 num_classes = np.max(np.array(labels))
 print(num_classes)
-kf=KFold(10,shuffle=True)
+kf=KFold(4,shuffle=True)
 
 for train_index, test_index in kf.split(all_features):
     print('---------------------------------------------------')

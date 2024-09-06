@@ -57,7 +57,10 @@ def predict_holdout(test_index,txt_loc,lbl_loc,model_path,num_classes,batch_size
 
     # For performance analysis
     def MSE(x,y):
-        return np.sum((x-y)**2)/batch_size
+        squared_diff = tf.square(tf.subtract(x, y))
+        loss = tf.reduce_sum(squared_diff) / batch_size
+        print(loss)
+        return loss
 
     # Dense layer to choose input importance
     D_in=tf.layers.dense(X,num_input,activation=tf.nn.leaky_relu)
